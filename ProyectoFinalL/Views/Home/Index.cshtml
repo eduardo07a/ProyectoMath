@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+}
+
+<div class="jumbotron" style="text-align: center; margin-top: 50px;">
+    <h1>¡Bienvenido al Sistema!</h1>
+    <p class="lead">Has iniciado sesión correctamente en <strong>ProyectoFinalL</strong>.</p>
+    <hr />
+    <div class="alert alert-success">
+        Conexión con la base de datos: <strong>Exitosa</strong>
+    </div>
+    <br />
+    <a href="@Url.Action("Login", "Login")" class="btn btn-danger">Cerrar Sesión</a>
+</div>
