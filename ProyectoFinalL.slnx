@@ -1,3 +1,7 @@
 <Solution>
+  <Project Path="Core/Core.csproj" Id="1eb6e424-3509-4693-9968-78a97a81f6a8" />
+  <Project Path="DataB/DataB.csproj" Id="09439d13-bd5c-4184-8b73-b3d406cd0349" />
+  <Project Path="Modelos/Modelos.csproj" Id="25c7111e-0b52-4fcc-8959-8dd9ab10fc4a" />
   <Project Path="ProyectoFinalL/ProyectoFinalL.csproj" Id="f0cb0749-bdad-4213-b113-1c1aeb53f8a4" />
+  <Project Path="Repositorios/Repositorios.csproj" Id="074fb188-5403-4fba-830e-e1e2945a4c11" />
 </Solution>

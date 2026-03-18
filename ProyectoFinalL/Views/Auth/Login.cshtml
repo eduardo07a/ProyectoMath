@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MathRiddles - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f4f7f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-card {
+            width: 400px;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .btn-custom {
+            background: #6c63ff;
+            color: white;
+            border-radius: 25px;
+        }
+
+            .btn-custom:hover {
+                background: #5a52d5;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2 class="text-center mb-4">MathRiddles</h2>
+        @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+        {
+            <div class="mb-3">
+                <label class="form-label">Correo Electrónico</label>
+                <input type="email" name="correo" class="form-control" placeholder="ejemplo@correo.com" required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Contraseña</label>
+                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-custom w-100 mb-3">Ingresar</button>
+            <p class="text-center small">¿No tienes cuenta? <a href="@Url.Action("Register", "Auth")">Regístrate aquí</a></p>
+        }
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger mt-3 py-2 small text-center">@ViewBag.Error</div>
+        }
+    </div>
+</body>
+</html>
