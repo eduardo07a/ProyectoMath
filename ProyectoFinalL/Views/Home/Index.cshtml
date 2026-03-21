@@ -1,14 +1,132 @@
 ﻿@{
-    ViewBag.Title = "Inicio";
+    ViewBag.Title = "Main Menu";
 }
 
-<div class="jumbotron" style="text-align: center; margin-top: 50px;">
-    <h1>¡Bienvenido al Sistema!</h1>
-    <p class="lead">Has iniciado sesión correctamente en <strong>ProyectoFinalL</strong>.</p>
-    <hr />
-    <div class="alert alert-success">
-        Conexión con la base de datos: <strong>Exitosa</strong>
+<div class="main-screen-wrapper">
+
+    <div class="game-menu-container text-center">
+
+        <div class="game-header text-uppercase">
+            Menu
+        </div>
+
+        <div class="mb-4 welcome-msg">
+            BIENVENIDO, @Session["Usuario"]
+        </div>
+
+        <div class="menu-options px-4">
+            <a href="@Url.Action("SeleccionarNivel", "Home")" class="btn-game btn-play">JUGAR</a>
+
+            <a href="@Url.Action("Perfil", "Usuario")" class="btn-game btn-profile">MI PERFIL</a>
+            <a href="@Url.Action("Ranking", "Home")" class="btn-game">RANKING</a>
+
+            <div class="mt-2">
+                <a href="@Url.Action("Logout", "Auth")" class="btn-game btn-logout">CERRAR SESIÓN</a>
+            </div>
+        </div>
     </div>
-    <br />
-    <a href="@Url.Action("Login", "Auth")" class="btn btn-danger">Cerrar Sesión</a>
 </div>
+
+@if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
+{
+    <div class="text-center mt-3 admin-panel">
+        <a href="@Url.Action("AdminPanel", "Admin")" class="btn btn-danger btn-sm">Manejo Admin</a>
+    </div>
+}
+
+<style>
+
+    .main-screen-wrapper {
+        background-image: url('@Url.Content("~/Content/images/image_13.png")');
+        background-size: cover;          
+        background-position: center top; 
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        
+        box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.3);
+    }
+
+    .game-menu-container {
+        background-color: #3498db;
+        border: 8px solid #2980b9;
+        border-radius: 40px;
+        padding: 30px;
+        box-shadow: 0 15px 0 #1f618d;
+        max-width: 450px;
+        width: 90%;
+    }
+
+    .game-header {
+        background-color: #ffcc4d;
+        border: 5px solid #e6b800;
+        border-radius: 15px;
+        color: white;
+        text-shadow: 3px 3px 0 #b38f00;
+        padding: 10px;
+        margin-bottom: 25px;
+        font-weight: bold;
+        font-size: 28px;
+        letter-spacing: 2px;
+    }
+
+    .welcome-msg {
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif;
+        text-shadow: 2px 2px 0 #1f618d;
+    }
+
+    .btn-game {
+        background-color: #ffeb99;
+        border: none;
+        border-bottom: 6px solid #d4c27d;
+        border-radius: 12px;
+        color: #8c2dbd;
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 15px;
+        transition: all 0.1s;
+        width: 100%;
+        display: block;
+        padding: 10px;
+        text-decoration: none !important;
+        text-align: center;
+        font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif;
+    }
+
+        .btn-game:hover {
+            background-color: #fff2bf;
+            transform: translateY(2px);
+            border-bottom-width: 4px;
+            color: #6a2191;
+        }
+
+        .btn-game:active {
+            transform: translateY(6px);
+            border-bottom-width: 0;
+        }
+
+
+    .btn-salir {
+        background-color: #ffb3ba;
+        border-bottom-color: #ff8b94;
+        color: #cc0000;
+    }
+
+        .btn-salir:hover {
+            background-color: #ffccd1;
+            color: #990000;
+        }
+
+    .admin-panel {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+    }
+</style>

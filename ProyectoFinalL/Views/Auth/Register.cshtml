@@ -38,17 +38,23 @@
                 <label class="form-label">Correo Electrónico</label>
                 <input type="email" name="correo" class="form-control" required placeholder="tu@correo.com">
             </div>
-            <div class="mb-4">
-                <label class="form-label">Contraseña (5 dígitos)</label>
-                <input type="password" name="password" class="form-control" minlength="5" title="Mínimo 5 caracteres" required placeholder="TuContraseña123">
+            <div class="mb-3">
+                <label class="form-label">Nombre De Usuario</label>
+                <input type="text" name="nombre" placeholder="Nombre de usuario (Apodo)" class="form-control" required />
             </div>
-            <button type="submit" class="btn btn-custom w-100 mb-3">Registrarme</button>
-            <p class="text-center small">¿Ya tienes cuenta? <a href="@Url.Action("Login", "Auth")">Inicia sesión</a></p>
-        }
-        @if (ViewBag.Error != null)
-        {
-            <div class="alert alert-danger mt-3 py-2 small text-center">@ViewBag.Error</div>
-        }
-    </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Contraseña (5 dígitos)</label>
+                    <input type="password" name="password" class="form-control" minlength="5" title="Mínimo 5 caracteres" required placeholder="Contraseña">
+
+                </div>
+                <button type="submit" class="btn btn-custom w-100 mb-3">Registrarme</button>
+                <p class="text-center small">¿Ya tienes cuenta? <a href="@Url.Action("Login", "Auth")">Inicia sesión</a></p>
+                }
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger mt-3 py-2 small text-center">@ViewBag.Error</div>
+                }
+            </div>
 </body>
 </html>

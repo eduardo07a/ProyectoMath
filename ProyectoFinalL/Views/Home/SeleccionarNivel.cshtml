@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Seleccionar Dificultad";
+}
+
+<div class="main-screen-wrapper">
+    <div class="game-menu-container text-center">
+
+        <div class="game-header text-uppercase">
+            MODOS DE JUEGO
+        </div>
+
+        <div class="menu-options px-4 mt-4">
+            <a href="@Url.Action("Index", "Game", new { nivel = "facil" })" class="btn-game btn-level">MODO FÁCIL</a>
+
+            <a href="@Url.Action("Index", "Game", new { nivel = "intermedio" })" class="btn-game btn-level">INTERMEDIO</a>
+
+            <a href="@Url.Action("Index", "Game", new { nivel = "dificil" })" class="btn-game btn-level">DIFÍCIL</a>
+
+            <div class="mt-4 pt-2">
+                <a href="@Url.Action("Index", "Home")" class="btn-game btn-cancel">VOLVER AL MENÚ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .main-screen-wrapper {
+        background-image: url('@Url.Content("~/Content/images/image_13.png")');
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .game-menu-container {
+        background-color: #3498db;
+        border: 8px solid #2980b9;
+        border-radius: 40px;
+        padding: 40px 20px;
+        box-shadow: 0 15px 0 #1f618d;
+        max-width: 450px;
+        width: 90%;
+    }
+
+    .game-header {
+        background-color: #ffcc4d;
+        border: 6px solid #e6b800;
+        border-radius: 20px;
+        color: white;
+        text-shadow: 3px 3px 0 #b38f00;
+        padding: 15px;
+        font-weight: 900;
+        font-size: 28px;
+    }
+
+    .btn-game {
+        border: none;
+        border-radius: 15px;
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 15px;
+        padding: 12px;
+        display: block;
+        text-decoration: none !important;
+        transition: all 0.1s;
+    }
+
+    .btn-level {
+        background-color: #fff176;
+        border-bottom: 8px solid #fbc02d;
+        color: #7b1fa2;
+    }
+
+    .btn-cancel {
+        background-color: #81d4fa;
+        border-bottom: 8px solid #4fc3f7;
+        color: white;
+    }
+
+    .btn-game:active {
+        transform: translateY(4px);
+        border-bottom-width: 2px;
+    }
+</style>

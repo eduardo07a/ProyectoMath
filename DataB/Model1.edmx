@@ -12,6 +12,8 @@
           <Property Name="IdPuntaje" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUsuario" Type="int" />
           <Property Name="Puntos" Type="int" />
+          <Property Name="Dificultad" Type="nvarchar" MaxLength="20" />
+          <Property Name="FechaPuntaje" Type="datetime" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -20,6 +22,8 @@
           <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Correo" Type="nvarchar" MaxLength="100" />
           <Property Name="Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="EsAdmin" Type="bit" />
         </EntityType>
         <EntityContainer Name="MathRiddlesDBModelStoreContainer">
           <EntitySet Name="Puntajes" EntityType="Self.Puntajes" Schema="dbo" store:Type="Tables" />
@@ -40,6 +44,8 @@
           <Property Name="IdPuntaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUsuario" Type="Int32" />
           <Property Name="Puntos" Type="Int32" />
+          <Property Name="Dificultad" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FechaPuntaje" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -48,6 +54,8 @@
           <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EsAdmin" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -58,6 +66,8 @@
           <EntitySetMapping Name="Puntajes">
             <EntityTypeMapping TypeName="MathRiddlesDBModel.Puntaje">
               <MappingFragment StoreEntitySet="Puntajes">
+                <ScalarProperty Name="FechaPuntaje" ColumnName="FechaPuntaje" />
+                <ScalarProperty Name="Dificultad" ColumnName="Dificultad" />
                 <ScalarProperty Name="Puntos" ColumnName="Puntos" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="IdPuntaje" ColumnName="IdPuntaje" />
@@ -67,6 +77,8 @@
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="MathRiddlesDBModel.Usuario">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="EsAdmin" ColumnName="EsAdmin" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />

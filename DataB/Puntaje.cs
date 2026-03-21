@@ -17,7 +17,9 @@ namespace DataB
     {
         [Key]
         public int IdPuntaje { get; set; }
-        public int? IdUsuario { get; set; }
-        public int? Puntos { get; set; }
+        public Nullable<int> IdUsuario { get; set; }
+        public Nullable<int> Puntos { get; set; }
+        public string Dificultad { get; set; }
+        public Nullable<System.DateTime> FechaPuntaje { get; set; }
     }
 }

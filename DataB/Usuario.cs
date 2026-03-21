@@ -19,5 +19,7 @@ namespace DataB
         public int IdUsuario { get; set; }
         public string Correo { get; set; }
         public string Password { get; set; }
+        public string Nombre { get; set; }
+        public Nullable<bool> EsAdmin { get; set; }
     }
 }

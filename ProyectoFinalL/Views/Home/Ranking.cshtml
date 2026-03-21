@@ -1,0 +1,147 @@
+﻿@model IEnumerable<DataB.Puntaje>
+@{
+    ViewBag.Title = "Ranking Global";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="main-screen-wrapper">
+    <div class="game-menu-container">
+        <div class="game-header text-uppercase">TOP 10</div>
+
+        @using (Html.BeginForm("Ranking", "Home", FormMethod.Get, new { @class = "mt-3" }))
+        {
+            <input type="text" name="buscarNombre" class="form-control input-game"
+                   placeholder="NOMBRE DEL JUGADOR..." value="@ViewBag.NombreLimpio" />
+
+            <select name="filtroDificultad" class="form-select input-game">
+                <option value="Todos">MODO: TODOS</option>
+                <option value="Facil" @(Request.QueryString["filtroDificultad"] == "Facil" ? "selected" : "")>FÁCIL</option>
+                <option value="Intermedio" @(Request.QueryString["filtroDificultad"] == "Intermedio" ? "selected" : "")>INTERMEDIO</option>
+                <option value="Dificil" @(Request.QueryString["filtroDificultad"] == "Dificil" ? "selected" : "")>DIFÍCIL</option>
+            </select>
+
+            <button type="submit" class="btn-game btn-level text-uppercase">FILTRAR</button>
+        }
+
+        @if (ViewBag.ErrorBusqueda != null)
+        {
+            <div class="btn-game error-btn text-uppercase">@ViewBag.ErrorBusqueda</div>
+        }
+
+        <div class="table-responsive mt-2" style="max-height: 250px; overflow-y: auto;">
+            <table class="table table-borderless" style="color: white; font-weight: bold;">
+                <thead style="border-bottom: 3px solid #ffcc4d; color: #ffcc4d;">
+                    <tr>
+                        <th>#</th>
+                        <th>JUGADOR</th>
+                        <th>PTS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int puesto = 1; }
+                    @foreach (var item in Model)
+                    {
+                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <td style="color: #ffcc4d;">@puesto</td>
+                            <td class="text-uppercase">
+                                @{
+                                    var listaUsuarios = (List<DataB.Usuario>)ViewBag.Usuarios;
+                                    var usuario = listaUsuarios?.FirstOrDefault(u => u.IdUsuario == item.IdUsuario);
+                                    @(usuario?.Nombre ?? "---")
+                                }
+                            </td>
+                            <td style="color: #fff176;">@item.Puntos</td>
+                        </tr>
+                        puesto++;
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-3">
+            <a href="@Url.Action("Index", "Home")" class="btn-game btn-cancel text-uppercase">VOLVER</a>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .main-screen-wrapper {
+        background-image: url('@Url.Content("~/Content/images/image_13.png")');
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .game-menu-container {
+        background-color: #3498db;
+        border: 8px solid #2980b9;
+        border-radius: 40px;
+        padding: 40px 20px;
+        box-box-shadow: 0 15px 0 #1f618d;
+        max-width: 450px;
+        width: 90%;
+    }
+
+    .game-header {
+        background-color: #ffcc4d;
+        border: 6px solid #e6b800;
+        border-radius: 20px;
+        color: white;
+        text-shadow: 3px 3px 0 #b38f00;
+        padding: 15px;
+        font-weight: 900;
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .btn-game {
+        border: none;
+        border-radius: 15px;
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 15px;
+        padding: 12px;
+        display: block;
+        text-decoration: none !important;
+        transition: all 0.1s;
+        text-align: center;
+        width: 100%;
+    }
+
+    .btn-level {
+        background-color: #fff176;
+        border-bottom: 8px solid #fbc02d;
+        color: #7b1fa2;
+    }
+
+    .btn-cancel {
+        background-color: #81d4fa;
+        border-bottom: 8px solid #4fc3f7;
+        color: white;
+    }
+
+    .btn-game:active {
+        transform: translateY(4px);
+        border-bottom-width: 2px;
+    }
+
+    .input-game {
+        border-radius: 15px;
+        border: 4px solid #2980b9;
+        font-weight: bold;
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .error-btn {
+        background-color: #e74c3c;
+        border-bottom: 8px solid #c0392b;
+        color: white;
+    }
+</style>
