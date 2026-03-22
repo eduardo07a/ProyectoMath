@@ -1,10 +1,10 @@
-﻿
-@{
-    ViewBag.Title = "MathRiddles - Login";
+﻿@{
+    ViewBag.Title = "MathRiddles - Acceso";
 }
 
 <div class="main-auth-wrapper">
-    <div class="auth-card-flipper">
+
+    <div class="auth-card-flipper @(ViewBag.Modo == "registro" ? "register-active" : "")">
 
         <div class="auth-card auth-front">
             <h1 class="auth-logo">MathRiddles</h1>
@@ -23,6 +23,13 @@
                 <button type="submit" class="btn btn-primary auth-btn w-100">Ingresar</button>
             </form>
 
+            @if (ViewBag.Error != null && ViewBag.Modo != "registro")
+            {
+                <div class="alert alert-danger mt-3 py-2 small text-center" style="border-radius: 10px; background-color: #e74c3c; color: white; border: none;">
+                    @ViewBag.Error
+                </div>
+            }
+
             <p class="auth-footer mt-4">
                 ¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a>
             </p>
@@ -31,24 +38,31 @@
         <div class="auth-card auth-back">
             <h1 class="auth-logo">Registrarse</h1>
 
-            <form action="@Url.Action("Registrar", "Auth")" method="post">
+            <form action="@Url.Action("Register", "Auth")" method="post">
                 <div class="form-group mb-3">
                     <label>Nombre de Usuario</label>
-                    <input type="text" name="nombre" class="form-control auth-input" placeholder="Tu Nombre" required>
+                    <input type="text" name="nombre" class="form-control auth-input" placeholder="Tu Apodo" required>
                 </div>
 
                 <div class="form-group mb-3">
                     <label>Correo Electrónico</label>
-                    <input type="email" name="correo" class="form-control auth-input" placeholder="ejemplo@correo.com" required>
+                    <input type="email" name="correo" class="form-control auth-input" placeholder="tu@correo.com" required>
                 </div>
 
                 <div class="form-group mb-4">
-                    <label>Contraseña</label>
-                    <input type="password" name="password" class="form-control auth-input" placeholder="********" required>
+                    <label>Contraseña (Mín. 5)</label>
+                    <input type="password" name="password" class="form-control auth-input" placeholder="********" minlength="5" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary auth-btn w-100">Crear Cuenta</button>
             </form>
+
+            @if (ViewBag.Error != null && ViewBag.Modo == "registro")
+            {
+                <div class="alert alert-danger mt-3 py-2 small text-center" style="border-radius: 10px; background-color: #e74c3c; color: white; border: none;">
+                    @ViewBag.Error
+                </div>
+            }
 
             <p class="auth-footer mt-4">
                 ¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a>
@@ -62,71 +76,42 @@
     body, .main-auth-wrapper {
         background-color: #2c3e50;
         color: #ecf0f1;
-        font-family: 'Poppins', sans-serif; 
+        font-family: 'Poppins', sans-serif;
         height: 100vh;
         width: 100vw;
         margin: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        perspective: 1000px; 
-        overflow: hidden;
+        perspective: 1000px;
     }
 
     .auth-card-flipper {
         position: relative;
         width: 100%;
         max-width: 400px;
+        height: 600px;
         transition: transform 0.6s ease;
         transform-style: preserve-3d;
     }
-        .auth-card-flipper.register-active {
-            transform: rotateY(180deg);
-        }
 
-    .auth-card {
-        background-color: #34495e; 
-        border-radius: 20px; 
-        padding: 40px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
-        backface-visibility: hidden;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-    }
-
-
-    .auth-back {
+    .register-active {
         transform: rotateY(180deg);
     }
 
-    .auth-card-flipper, .auth-front, .auth-back {
-        height: auto;
-    }
-
-    .auth-front {
-        position: relative;
-        z-index: 2;
+    .auth-card {
+        background-color: #34495e;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        backface-visibility: hidden;
+        position: absolute;
+        width: 100%;
+        height: 100%;
     }
 
     .auth-back {
-        z-index: 1;
-    }
-
-    .auth-logo {
-        color: white;
-        text-align: center;
-        margin-bottom: 30px;
-        font-weight: 700;
-        letter-spacing: 1px;
-    }
-
-    .form-group label {
-        color: #bdc3c7; 
-        font-weight: bold;
-        display: block;
-        margin-bottom: 8px;
+        transform: rotateY(180deg);
     }
 
     .auth-input {
@@ -135,61 +120,31 @@
         border-radius: 10px;
         padding: 12px;
         color: white;
-        transition: border-color 0.2s;
     }
 
-        .auth-input:focus {
-            background-color: #2c3e50;
-            border-color: #6c5ce7; 
-            color: white;
-            box-shadow: none;
-        }
-
-        .auth-input::placeholder {
-            color: #7f8c8d;
-        }
-
     .auth-btn {
-        background-color: #6c5ce7; 
+        background-color: #6c5ce7;
+        border: none;
         border-radius: 12px;
         padding: 15px;
         font-weight: bold;
-        font-size: 16px;
-        transition: background-color 0.2s, transform 0.1s;
     }
 
-        .auth-btn:hover {
-            background-color: #5c4cc7;
-        }
-
-        .auth-btn:active {
-            transform: translateY(2px);
-        }
-
-    .auth-footer {
-        color: #bdc3c7;
-        text-align: center;
-        font-size: 14px;
+    .auth-footer a {
+        color: #6c5ce7;
+        text-decoration: none;
+        font-weight: bold;
     }
-
-        .auth-footer a {
-            color: #6c5ce7;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-            .auth-footer a:hover {
-                text-decoration: underline;
-            }
 </style>
 
 <script>
-    document.getElementById('showRegister').addEventListener('click', function(e) {
+    document.getElementById('showRegister').addEventListener('click', function (e) {
         e.preventDefault();
         document.querySelector('.auth-card-flipper').classList.add('register-active');
     });
 
-    document.getElementById('showLogin').addEventListener('click', function(e) {
+    document.getElementById('showLogin').addEventListener('click', function (e) {
         e.preventDefault();
         document.querySelector('.auth-card-flipper').classList.remove('register-active');
-    });</script>
+    });
+</script>
