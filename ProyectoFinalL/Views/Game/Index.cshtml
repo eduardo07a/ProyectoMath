@@ -130,39 +130,75 @@
 <script>
     let puntos = 0;
     let tiempo = 30;
-    let nivelActual = "@nivelParaJS";
+
+    let nivelActual = "@(ViewBag.Nivel)".toUpperCase();
     let resultadoCorrecto;
 
     function generarOperacion() {
-        let n1 = Math.floor(Math.random() * 10) + 1;
-        let n2 = Math.floor(Math.random() * 10) + 1;
+        let n1, n2;
 
-        if (nivelActual === "Dificil") {
-            resultadoCorrecto = n1 * n2;
-            document.getElementById("operacion").innerText = n1 + " × " + n2;
-        } else {
+     
+        document.getElementById("respuestaUsuario").value = "";
+
+        if (nivelActual.includes("FACIL")) {
+            n1 = Math.floor(Math.random() * 10) + 1;
+            n2 = Math.floor(Math.random() * 10) + 1;
             resultadoCorrecto = n1 + n2;
             document.getElementById("operacion").innerText = n1 + " + " + n2;
         }
-        document.getElementById("respuestaUsuario").value = "";
+        else if (nivelActual.includes("INTERMEDIO")) {
+            n1 = Math.floor(Math.random() * 20) + 10;
+            n2 = Math.floor(Math.random() * 10) + 1;
+            resultadoCorrecto = n1 - n2;
+            document.getElementById("operacion").innerText = n1 + " - " + n2;
+        }
+        else if (nivelActual.includes("DIFICIL")) {
+            n1 = Math.floor(Math.random() * 12) + 2;
+            n2 = Math.floor(Math.random() * 10) + 2;
+            resultadoCorrecto = n1 * n2;
+            document.getElementById("operacion").innerText = n1 + " × " + n2;
+        }
+
         document.getElementById("respuestaUsuario").focus();
     }
 
     function verificar() {
-        let val = parseInt(document.getElementById("respuestaUsuario").value);
+        let input = document.getElementById("respuestaUsuario");
+        let val = parseInt(input.value);
+
         if (val === resultadoCorrecto) {
-            puntos += (nivelActual === "Facil" ? 10 : 25);
+         
+            if(nivelActual.includes("FACIL")) puntos += 10;
+            else if(nivelActual.includes("INTERMEDIO")) puntos += 20;
+            else puntos += 25;
+
             document.getElementById("puntos").innerText = puntos;
             generarOperacion();
+        } else {
+          
+            input.value = "";
+            input.focus();
         }
     }
 
-    function finalizarJuego() {
-        if (puntos === 0) {
+    async function finalizarJuego() {
+        if (puntos > 0) {
+            try {
 
-            document.getElementById("error-text-content").innerText = "¡No completaste el nivel, @Session["Usuario"]! Debes responder al menos una correcta.";
-            document.getElementById("modal-error-general").style.display = "flex";
-        } else {
+                const response = await fetch('/Game/GuardarPuntaje', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ puntos: puntos, dificultad: nivelActual })
+});
+
+                const res = await response.json();
+                if (res.success) {
+                    console.log("¡Puntajes guardados con éxito!");
+
+                }
+            } catch (err) {
+                console.error("Error en la conexión:", err);
+            }
 
             document.getElementById("puntos-final").innerText = puntos;
             document.getElementById("modal-resultados").style.display = "flex";
@@ -171,6 +207,7 @@
 
     document.addEventListener("DOMContentLoaded", function() {
         generarOperacion();
+
         document.getElementById("btnResponder").onclick = verificar;
         document.getElementById("respuestaUsuario").onkeyup = (e) => { if (e.key === "Enter") verificar(); };
 

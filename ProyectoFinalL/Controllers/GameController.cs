@@ -41,25 +41,33 @@ namespace ProyectoFinalL.Controllers
         [HttpPost]
         public JsonResult GuardarPuntaje(int puntos, string dificultad)
         {
+            if (Session["UsuarioId"] == null)
+            {
+                return Json(new { success = false, message = "Sesión expirada" });
+            }
+
             try
             {
                 int idUsuario = (int)Session["UsuarioId"];
 
-                var nuevoPuntaje = new DataB.Puntaje
+                using (var db = new MathRiddlesDBEntities())
                 {
-                    IdUsuario = idUsuario,
-                    Puntos = puntos,
-                    Dificultad = dificultad
-                };
+                    var nuevoRegistro = new Puntaje
+                    {
+                        IdUsuario = idUsuario,
+                        Puntos = puntos,
+                        Dificultad = dificultad
 
+                    };
 
-                _repoPuntaje.GuardarPuntaje(nuevoPuntaje);
-
+                    db.Puntajes.Add(nuevoRegistro);
+                    db.SaveChanges();
+                }
                 return Json(new { success = true });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = ex.Message });
+                return Json(new { success = false, error = ex.Message });
             }
         }
     }
