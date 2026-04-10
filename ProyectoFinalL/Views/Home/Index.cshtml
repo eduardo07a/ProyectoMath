@@ -30,16 +30,43 @@
 @if (Session["EsAdmin"] != null && (bool)Session["EsAdmin"])
 {
     <div class="text-center mt-3 admin-panel">
-        <a href="@Url.Action("AdminPanel", "Admin")" class="btn btn-danger btn-sm">Manejo Admin</a>
+       <a href="@Url.Action("ManejoAdmin", "Admin")" class="btn-game-admin-red">MANEJO ADMIN</a>
     </div>
-}
+}  
+
+<style>
+
+    .btn-game-admin-red {
+        background-color: #e74c3c; 
+        color: white;
+        text-decoration: none;
+        padding: 12px 25px;
+        border-radius: 15px; 
+        font-weight: bold;
+        display: inline-block;
+        border-bottom: 5px solid #c0392b; 
+        transition: 0.1s;
+        text-transform: uppercase;
+        font-family: 'Arial Rounded MT Bold', Arial;
+    }
+
+        .btn-game-admin-red:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+
+    .admin-panel {
+        margin-top: 20px;
+        perspective: 1000px;
+    }
+</style>
 
 <style>
 
     .main-screen-wrapper {
         background-image: url('@Url.Content("~/Content/images/image_13.png")');
-        background-size: cover;          
-        background-position: center top; 
+        background-size: cover;
+        background-position: center top;
         background-repeat: no-repeat;
         display: flex;
         justify-content: center;
@@ -47,7 +74,7 @@
         min-height: 100vh;
         width: 100vw;
         overflow: hidden;
-        
+
         box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.3);
     }
 

@@ -28,6 +28,7 @@ namespace ProyectoFinalL.Controllers
                 Session["UsuarioId"] = user.IdUsuario;
                 Session["EsAdmin"] = user.EsAdmin;
 
+
                 return RedirectToAction("Index", "Home");
             }
 

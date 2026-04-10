@@ -27,5 +27,6 @@ namespace DataB
     
         public virtual DbSet<Puntaje> Puntajes { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Configuracion> Configuracions { get; set; }
     }
 }

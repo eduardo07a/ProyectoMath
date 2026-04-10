@@ -2,96 +2,98 @@
     ViewBag.Title = "MathRiddles - Acceso";
 }
 
-<div class="main-auth-wrapper">
+<div class="super-container-game">
 
-    <div class="auth-card-flipper @(ViewBag.Modo == "registro" ? "register-active" : "")">
+    <div class="auth-card-flipper-game @(ViewBag.Modo == "registro" ? "register-active" : "")">
 
-        <div class="auth-card auth-front">
-            <h1 class="auth-logo">MathRiddles</h1>
+        <div class="auth-card-game auth-front-game">
+            <div class="game-header-banner">MathRiddles</div>
 
             <form action="@Url.Action("Login", "Auth")" method="post">
-                <div class="form-group mb-3">
+                <div class="form-group-game">
                     <label>Correo Electrónico</label>
-                    <input type="email" name="correo" class="form-control auth-input" placeholder="ejemplo@correo.com" required>
+                    <input type="email" name="correo" class="game-input-style" placeholder="ejemplo@correo.com" required>
                 </div>
 
-                <div class="form-group mb-4">
+                <div class="form-group-game">
                     <label>Contraseña</label>
-                    <input type="password" name="password" class="form-control auth-input" placeholder="********" required>
+                    <input type="password" name="password" class="game-input-style" placeholder="********" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary auth-btn w-100">Ingresar</button>
+                <button type="submit" class="btn-game-purple-style">Ingresar</button>
             </form>
 
             @if (ViewBag.Error != null && ViewBag.Modo != "registro")
             {
-                <div class="alert alert-danger mt-3 py-2 small text-center" style="border-radius: 10px; background-color: #e74c3c; color: white; border: none;">
-                    @ViewBag.Error
-                </div>
+                <div class="alert-game-error">@ViewBag.Error</div>
             }
 
-            <p class="auth-footer mt-4">
-                ¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a>
+            <p class="auth-footer-game mt-4">
+                ¿No tienes cuenta? <a href="#" id="showRegister" class="yellow-link-game">Regístrate aquí</a>
             </p>
         </div>
 
-        <div class="auth-card auth-back">
-            <h1 class="auth-logo">Registrarse</h1>
+        <div class="auth-card-game auth-back-game">
+            <div class="game-header-banner">Registrarse</div>
 
             <form action="@Url.Action("Register", "Auth")" method="post">
-                <div class="form-group mb-3">
+                <div class="form-group-game">
                     <label>Nombre de Usuario</label>
-                    <input type="text" name="nombre" class="form-control auth-input" placeholder="Tu Apodo" required>
+                    <input type="text" name="nombre" class="game-input-style" placeholder="Tu Apodo" required>
                 </div>
 
-                <div class="form-group mb-3">
+                <div class="form-group-game">
                     <label>Correo Electrónico</label>
-                    <input type="email" name="correo" class="form-control auth-input" placeholder="tu@correo.com" required>
+                    <input type="email" name="correo" class="game-input-style" placeholder="tu@correo.com" required>
                 </div>
 
-                <div class="form-group mb-4">
+                <div class="form-group-game">
                     <label>Contraseña (Mín. 5)</label>
-                    <input type="password" name="password" class="form-control auth-input" placeholder="********" minlength="5" required>
+                    <input type="password" name="password" class="game-input-style" placeholder="********" minlength="5" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary auth-btn w-100">Crear Cuenta</button>
+                <button type="submit" class="btn-game-purple-style">Crear Cuenta</button>
             </form>
 
             @if (ViewBag.Error != null && ViewBag.Modo == "registro")
             {
-                <div class="alert alert-danger mt-3 py-2 small text-center" style="border-radius: 10px; background-color: #e74c3c; color: white; border: none;">
-                    @ViewBag.Error
-                </div>
+                <div class="alert-game-error">@ViewBag.Error</div>
             }
 
-            <p class="auth-footer mt-4">
-                ¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a>
+            <p class="auth-footer-game mt-4">
+                ¿Ya tienes cuenta? <a href="#" id="showLogin" class="yellow-link-game">Inicia sesión aquí</a>
             </p>
         </div>
     </div>
 </div>
 
 <style>
-
-    body, .main-auth-wrapper {
-        background-color: #2c3e50;
-        color: #ecf0f1;
-        font-family: 'Poppins', sans-serif;
-        height: 100vh;
-        width: 100vw;
+   
+    html, body {
         margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden; 
+        background-color: #2c3e50; 
+        font-family: 'Arial Rounded MT Bold', Arial; 
+    }
+    
+
+    .super-container-game {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        perspective: 1000px;
+        justify-content: center; 
+        align-items: center; 
+        height: 100vh; 
+        width: 100vw;
+        perspective: 1500px; 
     }
 
-    .auth-card-flipper {
+    .auth-card-flipper-game {
         position: relative;
-        width: 100%;
-        max-width: 400px;
+        width: 90%; 
+        max-width: 420px; 
         height: 600px;
-        transition: transform 0.6s ease;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         transform-style: preserve-3d;
     }
 
@@ -99,52 +101,119 @@
         transform: rotateY(180deg);
     }
 
-    .auth-card {
-        background-color: #34495e;
-        border-radius: 20px;
-        padding: 40px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        backface-visibility: hidden;
+    .auth-card-game {
         position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
+        background-color: #3498db; 
+        border-radius: 30px; 
+        padding: 30px;
+        box-sizing: border-box; 
+
+        border: 5px solid #2980b9;
+        box-shadow: 0 10px 0 #21618C;
+
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
-    .auth-back {
+    .game-header-banner {
+        background-color: #f1c40f;
+        border-radius: 15px;
+        padding: 15px;
+        text-align: center;
+        color: white;
+        font-size: 28px;
+        font-weight: bold;
+        text-shadow: 2px 2px #b7950b;
+        border-bottom: 5px solid #d4ac0d; 
+        margin-bottom: 30px;
+    }
+
+    .form-group-game {
+        margin-bottom: 20px;
+        color: white; 
+    }
+
+        .form-group-game label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+    .game-input-style {
+        width: 100%;
+        background-color: white;
+        border-radius: 15px;
+        border: none;
+        padding: 15px;
+        box-sizing: border-box;
+        color: #2c3e50;
+        font-weight: bold;
+    }
+
+    .btn-game-purple-style {
+        width: 100%;
+        background-color: #6c5ce7; 
+        color: white;
+        border: none;
+        border-radius: 15px;
+        padding: 18px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        border-bottom: 5px solid #4834d4;
+        transition: 0.2s;
+        margin-top: 10px;
+    }
+
+        .btn-game-purple-style:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+
+    .auth-footer-game {
+        text-align: center;
+        color: white;
+        font-size: 14px;
+    }
+
+    .yellow-link-game {
+        color: #f1c40f; 
+        text-decoration: underline;
+        font-weight: bold;
+    }
+
+    .alert-game-error {
+        background-color: #e74c3c;
+        color: white;
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .auth-front-game {
+        z-index: 2;
+        transform: rotateY(0deg);
+    }
+
+    .auth-back-game {
         transform: rotateY(180deg);
     }
 
-    .auth-input {
-        background-color: #2c3e50;
-        border: 2px solid #57606f;
-        border-radius: 10px;
-        padding: 12px;
-        color: white;
-    }
-
-    .auth-btn {
-        background-color: #6c5ce7;
-        border: none;
-        border-radius: 12px;
-        padding: 15px;
-        font-weight: bold;
-    }
-
-    .auth-footer a {
-        color: #6c5ce7;
-        text-decoration: none;
-        font-weight: bold;
-    }
 </style>
 
 <script>
     document.getElementById('showRegister').addEventListener('click', function (e) {
         e.preventDefault();
-        document.querySelector('.auth-card-flipper').classList.add('register-active');
+        document.querySelector('.auth-card-flipper-game').classList.add('register-active');
     });
 
     document.getElementById('showLogin').addEventListener('click', function (e) {
         e.preventDefault();
-        document.querySelector('.auth-card-flipper').classList.remove('register-active');
+        document.querySelector('.auth-card-flipper-game').classList.remove('register-active');
     });
 </script>

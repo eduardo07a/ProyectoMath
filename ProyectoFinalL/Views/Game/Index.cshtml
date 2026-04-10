@@ -129,7 +129,7 @@
 
 <script>
     let puntos = 0;
-    let tiempo = 30;
+    let tiempo = parseInt("@(ViewBag.TiempoActual ?? 30)");
 
     let nivelActual = "@(ViewBag.Nivel)".toUpperCase();
     let resultadoCorrecto;
@@ -137,7 +137,7 @@
     function generarOperacion() {
         let n1, n2;
 
-     
+
         document.getElementById("respuestaUsuario").value = "";
 
         if (nivelActual.includes("FACIL")) {
@@ -167,7 +167,7 @@
         let val = parseInt(input.value);
 
         if (val === resultadoCorrecto) {
-         
+
             if(nivelActual.includes("FACIL")) puntos += 10;
             else if(nivelActual.includes("INTERMEDIO")) puntos += 20;
             else puntos += 25;
@@ -175,7 +175,7 @@
             document.getElementById("puntos").innerText = puntos;
             generarOperacion();
         } else {
-          
+
             input.value = "";
             input.focus();
         }

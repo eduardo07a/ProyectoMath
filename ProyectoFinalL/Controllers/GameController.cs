@@ -34,8 +34,11 @@ namespace ProyectoFinalL.Controllers
             {
                 ViewBag.NombreUsuario = "Error: No hay sesión";
             }
-
+            var tiempoConfig = db.Configuracions.FirstOrDefault(c => c.Clave == "TiempoJuego")?.Valor ?? "30";
+            ViewBag.TiempoLimite = tiempoConfig;
+            ViewBag.Nivel = nivel;
             return View();
+
         }
 
         [HttpPost]
@@ -70,5 +73,6 @@ namespace ProyectoFinalL.Controllers
                 return Json(new { success = false, error = ex.Message });
             }
         }
+
     }
 }

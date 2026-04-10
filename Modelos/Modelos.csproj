@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Modelos</RootNamespace>
     <AssemblyName>Modelos</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,6 +56,10 @@
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{1eb6e424-3509-4693-9968-78a97a81f6a8}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataB\DataB.csproj">
+      <Project>{09439d13-bd5c-4184-8b73-b3d406cd0349}</Project>
+      <Name>DataB</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
