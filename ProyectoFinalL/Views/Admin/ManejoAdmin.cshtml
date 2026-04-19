@@ -1,7 +1,7 @@
 ﻿@model ProyectoFinalL.Models.AdminViewModel
 
 <div class="main-screen-wrapper">
-    <div class="game-menu-container" style="max-width: 850px;">
+    <div class="game-menu-container" style="max-width: 900px;">
         <a href="@Url.Action("Index", "Game")" class="btn-close-x">X</a>
 
         <div class="game-header" style="color: #2c3e50; margin-bottom: 20px; font-size: 24px;">
@@ -17,14 +17,23 @@
             </form>
         </div>
 
-        <div style="background: white; border-radius: 20px; padding: 15px; color: #2c3e50; margin-top: 15px;">
+        <div style="margin: 15px 0;">
+            <form action="@Url.Action("ReiniciarDashboard", "Admin")" method="post">
+                <button type="submit" class="btn-game" style="background-color: #e74c3c; color: white; border-bottom: 6px solid #c0392b; width: 100%;"
+                        onclick="return confirm('¿BORRAR TODOS los puntajes de la base de datos?')">
+                    🗑️ REINICIAR DASHBOARD (BORRAR TODO)
+                </button>
+            </form>
+        </div>
+
+        <div style="background: white; border-radius: 20px; padding: 15px; color: #2c3e50; margin-top: 15px; overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
-                    <tr style="border-bottom: 2px solid #3498db; color: #3498db; font-size: 14px;">
+                    <tr style="border-bottom: 2px solid #3498db; color: #3498db; font-size: 13px;">
                         <th style="padding: 10px; text-align: left;">JUGADOR</th>
                         <th style="padding: 10px;">PUNTOS</th>
                         <th style="padding: 10px;">CONTRASEÑA</th>
-                        <th style="padding: 10px;">ACCIÓN</th>
+                        <th style="padding: 10px;">ELIMINAR</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,28 +46,39 @@
                             </td>
 
                             <td style="padding: 10px;">
-                                <form action="@Url.Action("ActualizarPuntaje", "Admin")" method="post" style="display: flex; gap: 4px; justify-content: center;">
-                                    <input type="hidden" name="idUsuario" value="@user.IdUsuario" />
-                                    <input type="number" name="nuevosPuntos"
-                                           value="@(Model.Puntajes.Where(p => p.IdUsuario == user.IdUsuario).OrderByDescending(p => p.Puntos).Select(p => p.Puntos).FirstOrDefault())"
-                                           style="width: 65px; border: 1.5px solid #2ecc71; border-radius: 8px; text-align: center; font-weight: bold;" />
-                                    <button type="submit" class="btn-blue-light" style="border: none; border-radius: 5px; padding: 2px 8px; cursor: pointer;">Ok</button>
-                                </form>
+                                <div style="display: flex; flex-direction: column; gap: 5px; align-items: center;">
+                                    <form action="@Url.Action("ActualizarPuntaje", "Admin")" method="post" style="display: flex; gap: 3px;">
+                                        <input type="hidden" name="idUsuario" value="@user.IdUsuario" />
+                                        <input type="number" name="nuevosPuntos"
+                                               value="@(Model.Puntajes.Where(p => p.IdUsuario == user.IdUsuario).OrderByDescending(p => p.Puntos).Select(p => p.Puntos).FirstOrDefault())"
+                                               style="width: 55px; border: 1.5px solid #2ecc71; border-radius: 8px; text-align: center;" />
+                                        <button type="submit" class="btn-blue-light" style="border: none; border-radius: 5px; padding: 2px 6px; cursor: pointer;">Ok</button>
+                                    </form>
+                                    <form action="@Url.Action("EliminarPuntajeUsuario", "Admin")" method="post">
+                                        <input type="hidden" name="idUsuario" value="@user.IdUsuario" />
+                                        <button type="submit" style="background: none; border: none; color: #e74c3c; font-size: 10px; text-decoration: underline; cursor: pointer;"
+                                                onclick="return confirm('¿Borrar puntos de @user.Nombre?')">
+                                            Eliminar Score
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
 
                             <td style="padding: 10px;">
-                                <form action="@Url.Action("EditarPassword", "Admin")" method="post" style="display: flex; gap: 4px; justify-content: center;">
+                                <form action="@Url.Action("EditarPassword", "Admin")" method="post" style="display: flex; gap: 3px; justify-content: center;">
                                     <input type="hidden" name="idUsuario" value="@user.IdUsuario" />
                                     <input type="text" name="nuevaPassword" placeholder="Nueva..."
-                                           style="width: 90px; border: 1.5px solid #3498db; border-radius: 8px; padding: 2px 5px; font-size: 12px;" />
-                                    <button type="submit" class="btn-blue-light" style="border: none; border-radius: 5px; padding: 2px 8px; cursor: pointer;">Ok</button>
+                                           style="width: 80px; border: 1.5px solid #3498db; border-radius: 8px; font-size: 11px; padding: 2px;" />
+                                    <button type="submit" class="btn-blue-light" style="border: none; border-radius: 5px; padding: 2px 6px; cursor: pointer;">Ok</button>
                                 </form>
                             </td>
 
-                            <td style="padding: 10px;">
-                                <form action="@Url.Action("EliminarUsuario", "Admin")" method="post" onsubmit="return confirm('¿Borrar a @user.Nombre?')">
+                            <td>
+                                <form action="@Url.Action("EliminarUsuario", "Admin")" method="post" onsubmit="return confirm('¿Borrar permanentemente a @user.Nombre?')">
                                     <input type="hidden" name="idUsuario" value="@user.IdUsuario" />
-                                    <button type="submit" style="background: #e74c3c; color: white; border: none; border-radius: 8px; padding: 6px; font-weight: bold; font-size: 10px; cursor: pointer;">BORRAR</button>
+                                    <button type="submit" style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                                        BORRAR
+                                    </button>
                                 </form>
                             </td>
                         </tr>

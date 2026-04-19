@@ -38,17 +38,18 @@ namespace ProyectoFinalL.Controllers
         }
 
         [HttpPost]
-        public ActionResult EliminarPuntaje(int idPuntaje)
+        public ActionResult EliminarPuntajeUsuario(int idUsuario)
         {
-            var p = db.Puntajes.Find(idPuntaje);
-            if (p != null)
+            var puntajes = db.Puntajes.Where(p => p.IdUsuario == idUsuario).ToList();
+
+            if (puntajes.Any())
             {
-                db.Puntajes.Remove(p);
+                db.Puntajes.RemoveRange(puntajes);
                 db.SaveChanges();
             }
+
             return RedirectToAction("ManejoAdmin");
         }
-
         [HttpPost]
         public ActionResult EditarPassword(int idUsuario, string nuevaPassword)
         {
@@ -78,28 +79,38 @@ namespace ProyectoFinalL.Controllers
         public ActionResult ActualizarPuntaje(int idUsuario, int nuevosPuntos)
         {
 
-            var puntaje = db.Puntajes
-                            .Where(p => p.IdUsuario == idUsuario)
-                            .OrderByDescending(p => p.Puntos)
-                            .FirstOrDefault();
+            var puntaje = db.Puntajes.FirstOrDefault(p => p.IdUsuario == idUsuario);
 
             if (puntaje != null)
             {
                 puntaje.Puntos = nuevosPuntos;
-
             }
             else
             {
-
-                db.Puntajes.Add(new Puntaje
-                {
-                    IdUsuario = idUsuario,
-                    Puntos = nuevosPuntos
-                });
+                db.Puntajes.Add(new Puntaje { IdUsuario = idUsuario, Puntos = nuevosPuntos });
             }
 
             db.SaveChanges();
             return RedirectToAction("ManejoAdmin");
         }
+        [HttpPost] 
+        public ActionResult EliminarUsuario(int idUsuario)
+        {
+
+            var usuario = db.Usuarios.Find(idUsuario);
+
+            if (usuario != null)
+            {
+
+                var puntajes = db.Puntajes.Where(p => p.IdUsuario == idUsuario).ToList();
+                db.Puntajes.RemoveRange(puntajes);
+
+                db.Usuarios.Remove(usuario);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("ManejoAdmin");
+        }
     }
+
 }
